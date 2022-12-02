@@ -2,6 +2,7 @@ package edu.up.cs301.pig;
 
 import android.content.Context;
 
+import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameState;
 
 public class PigGameState extends GameState {
@@ -11,6 +12,22 @@ public class PigGameState extends GameState {
     int runningTotal;
     int die;
 
+//    enum dieFace{
+//        ONE(R.drawable.face1),
+//        TWO(R.drawable.face2),
+//        THREE(R.drawable.face3),
+//        FOUR(R.drawable.face4),
+//        FIVE(R.drawable.face5),
+//        SIX(R.drawable.face6);
+//
+//        private final int value;
+//
+//        dieFace(int face) {
+//            value = face;
+//        }
+//
+//        public int getFace() {return value;}
+//    }
     public PigGameState(){
         turn = 0;
         player0Score = 0;

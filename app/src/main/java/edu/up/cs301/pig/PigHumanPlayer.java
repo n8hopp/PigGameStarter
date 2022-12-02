@@ -7,6 +7,7 @@ import edu.up.cs301.game.infoMsg.GameInfo;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -60,7 +61,22 @@ public class PigHumanPlayer extends GameHumanPlayer implements OnClickListener {
      */
     @Override
     public void receiveInfo(GameInfo info) {
-        //TODO You will implement this method to receive state objects from the game
+        if(!(info instanceof PigGameState))
+        {
+            flash(Color.RED, 20);
+            return;
+        }
+        PigGameState state = (PigGameState)info;
+        int enemyId;
+
+        if(playerNum == 0){enemyId = 1;}
+        else {enemyId = 0;}
+
+        playerScoreTextView.setText(String.valueOf(state.getPlayerScore(playerNum)));
+        turnTotalTextView.setText(String.valueOf(state.getRunningTotal()));
+        oppScoreTextView.setText(String.valueOf(state.getPlayerScore(enemyId)));
+        dieImageButton.setImageResource(getDieFace(state.getDie()));
+        Log.i("HI", "INFO RECEIVED");
     }//receiveInfo
 
     /**
@@ -71,7 +87,17 @@ public class PigHumanPlayer extends GameHumanPlayer implements OnClickListener {
      * 		the button that was clicked
      */
     public void onClick(View button) {
-        //TODO  You will implement this method to send appropriate action objects to the game
+        if(button instanceof ImageButton)
+        {
+            PigRollAction rollAction = new PigRollAction(this);
+            game.sendAction(rollAction);
+            return;
+        }
+        else if(button instanceof Button)
+        {
+            PigHoldAction holdAction = new PigHoldAction(this);
+            game.sendAction(holdAction);
+        }
     }// onClick
 
     /**
@@ -103,4 +129,23 @@ public class PigHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
     }//setAsGui
 
+    public int getDieFace(int i)
+    {
+        switch(i)
+        {
+            case 2:
+                return R.drawable.face2;
+            case 3:
+                return R.drawable.face3;
+            case 4:
+                return R.drawable.face4;
+            case 5:
+                return R.drawable.face5;
+            case 6:
+                return R.drawable.face6;
+            default:
+                return R.drawable.face1;
+        }
+
+    }
 }// class PigHumanPlayer

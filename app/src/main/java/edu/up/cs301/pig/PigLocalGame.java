@@ -45,7 +45,9 @@ public class PigLocalGame extends LocalGame {
     protected boolean makeMove(GameAction action) {
         if(action instanceof PigHoldAction)
         {
-            gameState.setPlayerScore(gameState.getRunningTotal(), gameState.getTurn());
+            int run = gameState.getRunningTotal();
+            int scor = gameState.getPlayerScore(gameState.getTurn());
+            gameState.setPlayerScore(scor+run, gameState.getTurn());
             gameState.setRunningTotal(0);
             gameState.setTurn((gameState.getTurn() + 1) % 2);
             return true;
@@ -53,7 +55,8 @@ public class PigLocalGame extends LocalGame {
         if(action instanceof PigRollAction)
         {
             Random random = new Random();
-            int dieRoll = random.nextInt(6);
+            int dieRoll = random.nextInt(5);
+            dieRoll++;
             gameState.setDie(dieRoll);
             if(dieRoll != 1)
             {
